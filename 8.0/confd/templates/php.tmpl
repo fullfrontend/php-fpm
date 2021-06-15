@@ -1,0 +1,8 @@
+log_errors = On
+memory_limit = -1
+date.timezone = {{ getenv "TIMEZONE" }}
+
+
+display_errors = {{ getenv "PHP_DISPLAY_ERRORS" }}
+display_startup_errors = {{ getenv "PHP_DISPLAY_STARTUP_ERRORS" }}
+error_log = /proc/self/fd/2
