@@ -2,11 +2,9 @@ FROM php:8.0-fpm-alpine
 
 MAINTAINER Cedric Michaux <cedric@fullfrontend.be>
 
-ARG APP_ENV=development
 ENV PHP_PORT 9000
 ENV CONFD_VERSION 0.16.0
 ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV APP_ENV ${APP_ENV}
 
 EXPOSE $PHP_PORT
 
