@@ -25,6 +25,7 @@ RUN apk add --no-cache --virtual .runtime-deps \
                 libgomp \
                 libpng \
                 libtool \
+                libxslt \
                 libzip \
                 oniguruma \
                 unzip \
@@ -43,6 +44,7 @@ RUN set -xe \
             libpng-dev \
             libwebp-dev \
             libxpm-dev \
+            libxslt-dev \
             libzip-dev \
             oniguruma-dev \
             pcre-dev \
@@ -62,6 +64,7 @@ RUN set -xe \
             mbstring \
             opcache \
             pdo_mysql \
+            xsl \
             zip \
         && apk del .build-deps \
         && rm -rf /tmp/*
