@@ -8,9 +8,6 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 EXPOSE $PHP_PORT
 
-
-WORKDIR /app
-
 COPY entrypoint.sh /etc/php/entrypoint.sh
 COPY confd/ /etc/confd
 
