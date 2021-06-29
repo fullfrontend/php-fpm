@@ -11,6 +11,9 @@ EXPOSE $PHP_PORT
 COPY entrypoint.sh /etc/php/entrypoint.sh
 COPY confd/ /etc/confd
 
+WORKDIR /tmp
+
+
 RUN \
     curl -L -o /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 \
     && chmod +x /usr/local/bin/confd
@@ -67,7 +70,6 @@ RUN set -xe \
         && rm -rf /tmp/*
 
 COPY --from=composer:2.1  /usr/bin/composer /usr/bin/composer
-
 
 ENTRYPOINT ["/etc/php/entrypoint.sh"]
 
