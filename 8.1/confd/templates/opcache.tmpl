@@ -1,0 +1,11 @@
+[opcache]
+
+opcache.enable=1
+opcache.revalidate_freq=0
+opcache.validate_timestamps={{ getenv "PHP_OPCACHE_VALIDATE_TIMESTAMPS" }}
+opcache.max_accelerated_files={{ getenv "PHP_OPCACHE_MAX_ACCELERATED_FILES"}}
+opcache.memory_consumption={{ getenv "PHP_OPCACHE_MEMORY_CONSUMPTION"}}
+opcache.max_wasted_percentage={{ getenv "PHP_OPCACHE_MAX_WASTED_PERCENTAGE"}}
+opcache.interned_strings_buffer=16
+
+opcache.fast_shutdown=1
