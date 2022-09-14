@@ -24,6 +24,7 @@ RUN apk add --no-cache --virtual .runtime-deps \
                 imagemagick \
                 libgomp \
                 libpng \
+                libpq \
                 libtool \
                 libxslt \
                 libzip \
@@ -42,6 +43,7 @@ RUN set -xe \
             libjpeg-turbo-dev \
             libmcrypt-dev \
             libpng-dev \
+            libpq-dev \
             libwebp-dev \
             libxpm-dev \
             libxslt-dev \
@@ -68,12 +70,13 @@ RUN set -xe \
             mbstring \
             opcache \
             pdo_mysql \
+            pdo_pgsql \
             xsl \
             zip \
         && apk del .build-deps \
         && rm -rf /tmp/*
 
-COPY --from=composer:2.1  /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.4  /usr/bin/composer /usr/bin/composer
 
 ENTRYPOINT ["/etc/php/entrypoint.sh"]
 
