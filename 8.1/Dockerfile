@@ -76,7 +76,7 @@ RUN set -xe \
         && apk del .build-deps \
         && rm -rf /tmp/*
 
-COPY --from=composer:2.4  /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.5  /usr/bin/composer /usr/bin/composer
 
 ENTRYPOINT ["/etc/php/entrypoint.sh"]
 
