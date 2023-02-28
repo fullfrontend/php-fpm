@@ -1,24 +1,26 @@
-# docker-php-fpm
+# php-fpm for docker
 
-Base php configuration.
+Base php configuration for PHP 8.2 and 8.1.
 
 ## How to use this image
 
-This image can be used as-is. It contains composer 2.1
+This image can be used as-is. It contains composer 2.5
 
-It runs PHP 8.0-fpm-alpine with:
-* bcmath 
+It runs PHP 8.1-fpm-alpine or 8.2-fpm-alpine with those extensions:
+* bcmath
 * exif
-* gd 
+* gd
 * intl
 * mbstring
-* OPcache
+* opcache
 * pdo_mysql
+* pdo_pgsql
+* xsl
 * zip
   
 The base command to run it is:
 
-    docker run --name php -d -p 9000:9000 he8us/docker-php-fpm
+    docker run --name php -d -p 9000:9000 he8us/php-fpm:latest
 
 It can be configured using environment variables:
 
@@ -36,7 +38,7 @@ It can be configured using environment variables:
 And there's my docker-compose sample:
 
     php:
-        image: he8us/docker-php-fpm:8.0
+        image: he8us/php-fpm:8.2
         expose:
             - 9000
         environment:
