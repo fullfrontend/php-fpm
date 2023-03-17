@@ -22,13 +22,16 @@ RUN apk add --no-cache --virtual .runtime-deps \
                 gnupg \
                 icu \
                 imagemagick \
+                jpegoptim \
                 libgomp \
                 libpng \
                 libpq \
                 libtool \
                 libxslt \
                 libzip \
+                libwebp-tools \
                 oniguruma \
+                optipng \
                 unzip \
                 wget \
                 zip
