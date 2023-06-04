@@ -71,6 +71,7 @@ RUN set -xe \
             gd \
             intl \
             mbstring \
+            mysqli \
             opcache \
             pdo_mysql \
             pdo_pgsql \
