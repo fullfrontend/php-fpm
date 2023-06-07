@@ -19,11 +19,13 @@ RUN \
     && chmod +x /usr/local/bin/confd
 
 RUN apk add --no-cache --virtual .runtime-deps \
+                gifsicle \
                 gnupg \
                 icu \
                 imagemagick \
                 jpegoptim \
                 libgomp \
+                libjpeg-turbo-utils \
                 libpng \
                 libpq \
                 libtool \
