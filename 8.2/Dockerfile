@@ -70,6 +70,7 @@ RUN set -xe \
         && docker-php-ext-install \
             bcmath \
             exif \
+            ftp \
             gd \
             intl \
             mbstring \
