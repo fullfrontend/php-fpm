@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.0-fpm-alpine
 
 MAINTAINER Cedric Michaux <cedric@fullfrontend.be>
 
@@ -7,6 +7,7 @@ ENV CONFD_VERSION 0.16.0
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 WORKDIR /tmp
+
 
 RUN \
     curl -L -o /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 \
@@ -72,6 +73,7 @@ EXPOSE $PHP_PORT
 
 COPY ../entrypoint.sh /etc/php/entrypoint.sh
 COPY ../confd/ /etc/confd
+
 
 ENTRYPOINT ["/etc/php/entrypoint.sh"]
 

@@ -6,13 +6,7 @@ ENV PHP_PORT 9000
 ENV CONFD_VERSION 0.16.0
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-EXPOSE $PHP_PORT
-
-COPY entrypoint.sh /etc/php/entrypoint.sh
-COPY confd/ /etc/confd
-
 WORKDIR /tmp
-
 
 RUN \
     curl -L -o /usr/local/bin/confd https://github.com/kelseyhightower/confd/releases/download/v${CONFD_VERSION}/confd-${CONFD_VERSION}-linux-amd64 \
@@ -67,23 +61,18 @@ RUN set -xe \
         && docker-php-ext-enable imagick \
         && docker-php-ext-configure zip \
         && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-        && docker-php-ext-install \
-            bcmath \
-            exif \
-            ftp \
-            gd \
-            intl \
-            mbstring \
-            mysqli \
-            opcache \
-            pdo_mysql \
-            pdo_pgsql \
-            xsl \
-            zip \
+        && docker-php-ext-install bcmath exif ftp gd intl mbstring mysqli opcache pdo_mysql pdo_pgsql xsl zip \
+        && docker-php-ext-enable bcmath exif ftp gd intl mbstring mysqli opcache pdo_mysql pdo_pgsql xsl zip \
         && apk del .build-deps \
         && rm -rf /tmp/*
 
 COPY --from=composer:2.6  /usr/bin/composer /usr/bin/composer
+
+EXPOSE $PHP_PORT
+
+COPY ../entrypoint.sh /etc/php/entrypoint.sh
+COPY ../confd/ /etc/confd
+
 
 ENTRYPOINT ["/etc/php/entrypoint.sh"]
 
