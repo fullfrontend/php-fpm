@@ -16,6 +16,7 @@ jobs:
                         docker build -t ${IMAGE_NAME}:8.0 -f 8.0/Dockerfile .
                         docker build -t ${IMAGE_NAME}:8.1 -f 8.1/Dockerfile .
                         docker build -t ${IMAGE_NAME}:8.2 -f 8.2/Dockerfile .
+                        docker build -t ${IMAGE_NAME}:8.3 -f 8.3/Dockerfile .
                         docker tag ${IMAGE_NAME}:8.2 ${IMAGE_NAME}:latest
                         
                         echo ${DOCKER_PWD} | docker login -u ${DOCKER_LOGIN} --password-stdin
