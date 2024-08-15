@@ -1,6 +1,6 @@
 FROM php:8.0-fpm-alpine
 
-MAINTAINER Cedric Michaux <cedric@fullfrontend.be>
+LABEL maintainer="Cedric Michaux <cedric@fullfrontend.be>"
 
 ENV PHP_PORT=9000
 ENV CONFD_VERSION=0.16.0
@@ -67,7 +67,7 @@ RUN set -xe \
         && apk del .build-deps \
         && rm -rf /tmp/*
 
-COPY --from=composer:2.6  /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.7  /usr/bin/composer /usr/bin/composer
 
 EXPOSE $PHP_PORT
 
