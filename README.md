@@ -20,7 +20,7 @@ It runs PHP 8.1-fpm-alpine or 8.2-fpm-alpine with those extensions:
   
 The base command to run it is:
 
-    docker run --name php -d -p 9000:9000 he8us/php-fpm:latest
+    docker run --name php -d -p 9000:9000 fullfrontend/php-fpm:latest
 
 It can be configured using environment variables:
 
@@ -38,7 +38,7 @@ It can be configured using environment variables:
 And there's my docker-compose sample:
 
     php:
-        image: he8us/php-fpm:8.2
+        image: fullfrontend/php-fpm:8.2
         expose:
             - 9000
         environment:
