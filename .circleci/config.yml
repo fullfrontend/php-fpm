@@ -5,7 +5,7 @@ jobs:
       image: ubuntu-2204:current
     environment:
       DOCKER_BUILDKIT: 1
-      BUILDX_PLATFORMS: linux/amd64,linux/arm64/ve8
+      BUILDX_PLATFORMS: linux/amd64,linux/arm64/v8
       BUILDX_NO_DEFAULT_LOAD: false
       IMAGE_NAME: fullfrontend/php-fpm
     steps:
