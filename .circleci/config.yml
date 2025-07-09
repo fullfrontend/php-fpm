@@ -1,35 +1,56 @@
-version: 2
+version: 2.1
 jobs:
-    build-and-push:
-        docker:
-            -   image: cimg/base:current
-                environment:
-                    IMAGE_NAME: fullfrontend/php-fpm
-        steps:
-            - checkout
-            - setup_remote_docker
+  build-and-push:
+    machine:
+      image: ubuntu-2204:current
+    environment:
+      DOCKER_BUILDKIT: 1
+      BUILDX_PLATFORMS: linux/amd64,linux/arm64/ve8
+      BUILDX_NO_DEFAULT_LOAD: false
+      IMAGE_NAME: fullfrontend/php-fpm
+    steps:
+      - checkout
+      - run:
+          name: Log in to docker hub
+          command: |
+            echo $FFE_DOCKER_PWD | docker login -u $FFE_DOCKER_LOGIN --password-stdin
+      - run:
+          name: Install buildx
+          command: |
+            BUILDX_BINARY_URL="https://github.com/docker/buildx/releases/download/v0.4.2/buildx-v0.4.2.linux-amd64"
+            
+            curl --output docker-buildx \
+              --silent --show-error --location --fail --retry 3 \
+              "$BUILDX_BINARY_URL"
+            
+            mkdir -p ~/.docker/cli-plugins
+            
+            mv docker-buildx ~/.docker/cli-plugins/
+            chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            docker buildx install
+            # Run binfmt
+            docker run --rm --privileged tonistiigi/binfmt:latest --install "$BUILDX_PLATFORMS"
 
-            - run:
-                    name: "Build and push Docker image"
-                    command: |
-                        docker build -t ${IMAGE_NAME}:8.0 -f 8.0/Dockerfile .
-                        docker build -t ${IMAGE_NAME}:8.1 -f 8.1/Dockerfile .
-                        docker build -t ${IMAGE_NAME}:8.2 -f 8.2/Dockerfile .
-                        docker build -t ${IMAGE_NAME}:8.3 -f 8.3/Dockerfile .
-                        docker build -t ${IMAGE_NAME}:8.4 -f 8.4/Dockerfile .
-                        docker tag ${IMAGE_NAME}:8.4 ${IMAGE_NAME}:latest
-                        
-                        echo ${FFE_DOCKER_PWD} | docker login -u ${FFE_DOCKER_LOGIN} --password-stdin
-                        docker push --all-tags ${IMAGE_NAME}
+      - run:
+          name: Build from dockerfile
+          command: |
+            IMAGE_TAG="1.27.0.${CIRCLE_SHA1:0:7}"
+            docker buildx create --name fullfrontend --use
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.0 -f 8.0/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.1 -f 8.1/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.2 -f 8.2/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.3 -f 8.3/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.4 -f 8.4/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:latest -f 8.4/Dockerfile --push .
+
 
 workflows:
-    version: 2
-    build-and-deploy:
-        jobs:
-            - build-and-push:
-                context: 'Docker Hub'
-                filters:
-                    branches:
-                        only: master
-
-
+  version: 2
+  build-and-push:
+    jobs:
+      -   build-and-push:
+            context: 'Docker Hub'
+            filters:
+              branches:
+                only: master
