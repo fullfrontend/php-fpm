@@ -37,12 +37,11 @@ jobs:
           command: |
             IMAGE_TAG="1.27.0.${CIRCLE_SHA1:0:7}"
             docker buildx create --name fullfrontend --use
-            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.0 -f 8.0/Dockerfile --push .
-            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.1 -f 8.1/Dockerfile --push .
-            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.2 -f 8.2/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.4 -t ${IMAGE_NAME}:latest -f 8.4/Dockerfile --push .
             docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.3 -f 8.3/Dockerfile --push .
-            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.4 -f 8.4/Dockerfile --push .
-            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:latest -f 8.4/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.2 -f 8.2/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.1 -f 8.1/Dockerfile --push .
+            docker buildx build --platform ${BUILDX_PLATFORMS} -t ${IMAGE_NAME}:8.0 -f 8.0/Dockerfile --push .
 
 
 workflows:
